@@ -1,0 +1,11 @@
+/* linker.ld */
+ENTRY(kmain)
+SECTIONS {
+    . = 1M;                     /* Load kernel at 1MB */
+    .text : {
+        *(.multiboot_header)    /* ← MUST come first! */
+        *(.text)                /* Kernel code */
+    }
+    .data : { *(.data) }
+    .bss  : { *(.bss)  }
+}

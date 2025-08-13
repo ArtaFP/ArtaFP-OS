@@ -1,0 +1,7 @@
+section .multiboot
+align 4
+
+; Multiboot 1 header
+dd 0x1BADB002          ; Magic number (required)
+dd 0x00000003          ; Flags (align modules on page boundaries + provide memory map)
+dd -(0x1BADB002 + 3)   ; Checksum (magic + flags + checksum must equal 0)

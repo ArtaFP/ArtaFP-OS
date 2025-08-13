@@ -1,0 +1,14 @@
+#rm -f *.o kernel.bin myos.iso
+nasm -f elf32 boot.asm -o boot.o
+gcc -m32 -ffreestanding -c kernel.c -o kernel.o
+ld -m elf_i386 -T linker.ld -o kernel.bin boot.o kernel.o
+strings kernel.bin | grep "Hello, World!"
+mkdir -p isofiles/boot/grub
+cp kernel.bin isofiles/boot/
+cat > isofiles/boot/grub/grub.cfg <<EOF
+menuentry "MyOS" {
+    multiboot /boot/kernel.bin
+    boot
+}
+EOF
+grub-mkrescue -o myos.iso isofiles

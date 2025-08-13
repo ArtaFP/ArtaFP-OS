@@ -1,0 +1,6 @@
+void kmain() {
+    
+    volatile char *video = (volatile char*)0xb8000;
+    video[0] = 'X';  // Test output
+    while(1);
+}
